@@ -1,0 +1,27 @@
+#description {
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+#divInputCity {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#inputCity {
+  display: flex;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-right: 1rem;
+}
+
+#searchButton {
+  display: flex;
+  font-size: 1.5rem;
+  border-radius: 10px;
+  background-color: blue;
+  color: white;
+  border-color: blue;
+}
