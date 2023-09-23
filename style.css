@@ -25,3 +25,10 @@
   color: white;
   border-color: blue;
 }
+
+#scoreCity,
+#titleDescription,
+#titleScoreCity,
+#titleCategory {
+  font-size: 1.5rem;
+}
