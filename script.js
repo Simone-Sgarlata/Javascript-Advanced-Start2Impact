@@ -20,64 +20,99 @@ searchButton.id = "searchButton"; // aggiungo un id all'elemento searchButton pe
 divInputCity.appendChild(inputCity); // aggiungo l'elemento inputCity come figlio dell'elemento divInputCity
 divInputCity.appendChild(searchButton); // aggiungo l'elemento searchButton come figlio dell'elemento divInputCity
 
-const basicUrl = "https://api.teleport.org/api/urban_areas/slug:milan/scores/";
+document.addEventListener("DOMContentLoaded", () => {
+  let cityName = "";
 
-searchButton.addEventListener("click", {});
+  searchButton.addEventListener("click", () => {
+    cityName = inputCity.value;
+    const basicUrl = `https://api.teleport.org/api/urban_areas/slug:${cityName}/scores/`;
 
-fetch(basicUrl, {
-  method: "GET",
-})
-  .then((response) => response.json())
-  .then((data) => {
-    let titleDescription = document.createElement("div");
-    document.body.appendChild(titleDescription);
-    titleDescription.textContent = "Description of the city: ";
-    titleDescription.id = "titleDescription";
+    const oldTitleDescription = document.getElementById("titleDescription");
+    const oldDescriptionCity = document.getElementById("descriptionCity");
+    const oldTitleCategory = document.getElementById("titleCategory");
+    const oldCategories = document.getElementById("categories");
+    const oldTitleScoreCity = document.getElementById("titleScoreCity");
+    const oldScoreCity = document.getElementById("scoreCity");
 
-    let descriptionCity = document.createElement("div");
-    document.body.appendChild(descriptionCity);
-    descriptionCity.textContent = data.summary.replace(/<\/?p>|<\/?b>/g, "");
-    descriptionCity.id = "descriptionCity";
+    if (oldTitleDescription) {
+      oldTitleDescription.remove();
+    }
+    if (oldDescriptionCity) {
+      oldDescriptionCity.remove();
+    }
+    if (oldTitleCategory) {
+      oldTitleCategory.remove();
+    }
+    if (oldCategories) {
+      oldCategories.remove();
+    }
+    if (oldTitleScoreCity) {
+      oldTitleScoreCity.remove();
+    }
+    if (oldScoreCity) {
+      oldScoreCity.remove();
+    }
+    fetch(basicUrl, {
+      method: "GET",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        let titleDescription = document.createElement("div");
+        document.body.appendChild(titleDescription);
+        titleDescription.textContent = "Description of the city: ";
+        titleDescription.id = "titleDescription";
 
-    let titleCategory = document.createElement("div");
-    document.body.appendChild(titleCategory);
-    titleCategory.textContent = "Categories: ";
-    titleCategory.id = "titleCategory";
+        let descriptionCity = document.createElement("div");
+        document.body.appendChild(descriptionCity);
+        if (data.summary) {
+          descriptionCity.textContent = data.summary.replace(
+            /<\/?p>|<\/?b>/g,
+            ""
+          );
+        }
+        descriptionCity.id = "descriptionCity";
 
-    let categories = document.createElement("div");
-    document.body.appendChild(categories);
-    categories.id = "categories";
-    document.getElementById("categories");
-    data.categories.forEach((element, index) => {
-      const categoryName = element.name;
-      const categoryScore = element.score_out_of_10;
+        let titleCategory = document.createElement("div");
+        document.body.appendChild(titleCategory);
+        titleCategory.textContent = "Categories: ";
+        titleCategory.id = "titleCategory";
 
-      const category = document.createTextNode(
-        `Name: ${categoryName}, Score: ${categoryScore}`
-      );
+        let categories = document.createElement("div");
+        document.body.appendChild(categories);
+        categories.id = "categories";
+        document.getElementById("categories");
 
-      categories.appendChild(category);
+        if (data.categories) {
+          data.categories.forEach((element, index) => {
+            const categoryName = element.name;
+            const categoryScore = element.score_out_of_10;
 
-      if (index < data.categories.length - 1) {
-        categories.appendChild(document.createElement("br"));
-      }
-    });
+            const category = document.createTextNode(
+              `Name: ${categoryName}, Score: ${categoryScore}`
+            );
 
-    let titleScoreCity = document.createElement("div");
-    document.body.appendChild(titleScoreCity);
-    titleScoreCity.textContent = "Score of the city: ";
-    titleScoreCity.id = "titleScoreCity";
+            categories.appendChild(category);
 
-    let scoreCity = document.createElement("div");
-    document.body.appendChild(scoreCity);
-    scoreCity.textContent = data.teleport_city_score;
-    scoreCity.id = "scoreCity";
+            if (index < data.categories.length - 1) {
+              categories.appendChild(document.createElement("br"));
+            }
+          });
+        }
 
-    console.log(data);
-    console.log(descriptionCity);
-    console.log(categories);
-    console.log(scoreCity);
-  })
-  .catch((error) => {
-    console.log("Error for API request", error);
+        let titleScoreCity = document.createElement("div");
+        document.body.appendChild(titleScoreCity);
+        titleScoreCity.textContent = "Score of the city: ";
+        titleScoreCity.id = "titleScoreCity";
+
+        let scoreCity = document.createElement("div");
+        document.body.appendChild(scoreCity);
+        if (data.teleport_city_score) {
+          scoreCity.textContent = data.teleport_city_score;
+        }
+        scoreCity.id = "scoreCity";
+      })
+      .catch((error) => {
+        console.log("Error for API request", error);
+      });
   });
+});
