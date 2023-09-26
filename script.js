@@ -30,6 +30,13 @@ inputCity.addEventListener("input", () => {
   inputCity.value = inputValue; // riassegno la città con le lettere minuscole a inputCity.value
 });
 
+inputCity.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    // verifico se il tasto premuto è l'invio
+    event.preventDefault(); // impedisco l'invio del modulo per evitare errori con l'alert di errore e la chiamata
+  }
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   // fino a che il contenuto del DOM non è stato caricato non eseguo nulla
   let cityName = ""; // inizializzo la valiabile cityName
