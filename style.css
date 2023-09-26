@@ -26,7 +26,28 @@
   border-color: blue;
 }
 
-#scoreCity,
+#divCityInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#descriptionCity {
+  width: 22rem;
+}
+
+#titleDescription,
+#titleCategory,
+#titleScoreCity {
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+
+#scoreCity {
+  font-size: 2rem;
+}
+
 #titleDescription,
 #titleScoreCity,
 #titleCategory {
